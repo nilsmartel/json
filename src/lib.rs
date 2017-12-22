@@ -24,6 +24,10 @@ fn parse_json(data: &str) -> JSON {
     let data = skip_redundant_characters(data);
 }
 
+/// Skips all characters (redundant for JSON data)
+/// at the beginning of a &str
+/// @param text JSON Text to be checked
+/// returns JSON Text, with all redundant characters at the beginning skipped
 fn skip_redundant_characters(text: &str) -> &str {
     let mut i = 0;
     while is_redundant(str[i]) {
@@ -33,7 +37,7 @@ fn skip_redundant_characters(text: &str) -> &str {
     str[i:]
 }
 
-/// is_redundant
+/// Use it to test if a Character is of importance, when parsing JSON
 /// @param c Character to be tested
 /// returns true, if Character is redundant for JSON parsing
 fn is_redundant(c: char) -> bool {
