@@ -20,4 +20,25 @@ enum JSON {
     String(String)
 }
 
-fn parse_json(data: &str) -> JSON { JSON::Integer(0) }
+fn parse_json(data: &str) -> JSON {
+    let data = skip_redundant_characters(data);
+}
+
+fn skip_redundant_characters(text: &str) -> &str {
+    let mut i = 0;
+    while is_redundant(str[i]) {
+        i+=1;
+    }
+
+    str[i:]
+}
+
+/// is_redundant
+/// @param c Character to be tested
+/// returns true, if Character is redundant for JSON parsing
+fn is_redundant(c: char) -> bool {
+    match c {
+        '\n' | '\t' | ' ' => return true,
+        _ => return false,
+    }
+}
