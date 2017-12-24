@@ -1,6 +1,7 @@
 
 
 use std::collections::HashMap;
+use std::str::Chars;
 
 #[cfg(test)]
 mod tests {
@@ -41,10 +42,33 @@ pub enum JSON {
 /// Parses JSON Data (in form of &str)
 /// @param data JSON Data(in form of String) that needs to be parsed
 pub fn parse(data: &str) -> JSON {
-    for c in data.chars().filter(|c| !is_redundant(c)) {
+    let (rest, json) = parse_json(data.chars());
+    json
+}
+
+fn parse_json<'c>(iterator: &Chars) -> (&'c Chars, JSON) {
+
+    for c in iterator.filter(|c| !is_redundant(c)) {
+        match c {
+            'n' => {
+                iterator.skip(3);
+                return (iterator, JSON::Null);
+            },
+            't' => {
+                iterator.skip(3);
+                return (iterator, JSON::Boolean(true));
+            },
+            'f' => {
+                iterator.skip(4);
+                return (iterator, JSON::Boolean(false));
+            },
+            _ => {
+                return (iterator, JSON::Null);
+            }
+        }
     }
 
-    JSON::Null
+    ("".chars(), JSON::Null)
 }
 
 /// returns true, if character is redundant for parsing JSON data
