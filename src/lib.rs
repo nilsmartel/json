@@ -9,7 +9,7 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let json_data: &str = "{\"name\":\"Nils\",\"age\":20,\"height\":1.83,\"programmer\":true}";
+        let json_data: &str = "{\"name\":\"Nils\",\"age\":22,\"height\":1.84,\"programmer\":true}";
         let data = parse(json_data);
     }
 
